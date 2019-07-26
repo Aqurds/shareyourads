@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+
+    <!--favicon icon-->
+    <link rel="icon" type="image/png" href="../static/assets/img/favicon.png">
+
+    <title>Upload</title>
+
+    <!--web fonts-->
+    <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <!--bootstrap styles-->
+    <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--icon font-->
+    <link href="../static/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/assets/vendor/dashlab-icon/dashlab-icon.css" rel="stylesheet">
+    <link href="../static/assets/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <link href="../static/assets/vendor/themify-icons/css/themify-icons.css" rel="stylesheet">
+    <link href="../static/assets/vendor/weather-icons/css/weather-icons.min.css" rel="stylesheet">
+
+    <!--custom scrollbar-->
+    <link href="../static/assets/vendor/m-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
+
+    <!--jquery dropdown-->
+    <link href="../static/assets/vendor/jquery-dropdown-master/jquery.dropdown.css" rel="stylesheet">
+
+    <!--jquery ui-->
+    <link href="../static/assets/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+
+    <!--iCheck-->
+    <link href="../static/assets/vendor/icheck/skins/all.css" rel="stylesheet">
+
+    <!--dropzone-->
+    <link href="../static/assets/vendor/dropzone/dropzone.min.css" rel="stylesheet">
+	
+	<!--date picker-->
+    <link href="../static/assets/vendor/date-picker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!--custom styles-->
+    <link href="../static/assets/css/main.css" rel="stylesheet">
+	
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../static/assets/vendor/html5shiv.js"></script>
+    <script src="../static/assets/vendor/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .custom-nav-link:after{
+            display:none;
+        }
+    </style>
+</head>
+
+<body class="fixed-nav" style="padding-top:103px;">
+
+    <!--navigation : sidebar & header-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light container" id="mainNav" style="border-bottom: 0px; box-shadow:none;">
+
+        <!--brand name-->
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+            <img class="pr-3 float-left" src="../static/assets/img/logo.jpg" srcset="../static/assets/img/logo-icon@2x.png 2x"  alt="" style="width:75px; height:75px;"/>
+        </a>
+        <!--/brand name-->
+
+        
+
+        <!--responsive nav toggle-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--/responsive nav toggle-->
+
+        <!--responsive rightside toogle-->
+        <a href="javascript:;" class="nav-link right_side_toggle responsive-right-side-toggle">
+            <i class="icon-options-vertical"> </i>
+        </a>
+        <!--/responsive rightside toogle-->
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+            <!--header leftside links-->
+            <ul class="navbar-nav header-links" style="margin:0 auto;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link custom-nav-link dropdown-toggle mr-lg-2" id="actionNav" href="{{ url_for('home') }}" style="font-size:16px !important;">
+                        Mein Konto
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link custom-nav-link dropdown-toggle mr-lg-2" id="reportNav" href="{{ url_for('werbetreibende') }}" style="font-size:16px !important;">
+                        Werbetreibende
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mr-lg-2" id="orderNav" href="#" style="font-size:16px !important;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Werbung teilen
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="actionNav">
+                        <a class="dropdown-item" href="{{ url_for('weiterleitung') }}">Weiterleitung</a>
+                        <a class="dropdown-item" href="{{ url_for('upload') }}">Upload</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mr-lg-2" id="orderNav" href="#" style="font-size:16px !important;"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="actionNav">
+                        <a class="dropdown-item" href="{{ url_for('overview') }}">Overview</a>
+                        <a class="dropdown-item" href="{{ url_for('einstellungen') }}">Einstellungen</a>
+                    </div>
+                </li>
+            </ul>
+            <!--/header leftside links-->
+
+            <!--header rightside links-->
+            <ul class="navbar-nav header-links ml-auto hide-arrow" style="margin-left:0px !important;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mr-lg-3" id="userNav" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-thumb">
+                            <img class="rounded-circle" src="../static/assets/img/avatar/avatar1.jpg" alt=""/>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userNav">
+                        <a class="dropdown-item" href="{{ url_for('mein_profil') }}">My Profile</a>
+                        <!-- <a class="dropdown-item" href="#">Account Settings</a> -->
+                        <!-- <a class="dropdown-item" href="#">Inbox <span class="badge badge-primary">3</span></a> -->
+                        <!-- <a class="dropdown-item" href="#">Message <span class="badge badge-success">5</span></a> -->
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('sign_out') }}">Sign Out</a>
+                        <a class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+                        <a class="dropdown-item" href="{{ url_for('registration') }}">Registration</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link right_side_toggle">
+                        <i class="icon-options-vertical" style="top:4px;"> </i>
+                    </a>
+                </li>
+            </ul>
+            <!--/header rightside links-->
+
+        </div>
+    </nav>
+    <!--/navigation : sidebar & header-->
+
+    <div style="position:fixed; top:0px; background:#ffffff; height:103px; width:100%; z-index:999; box-shadow:0 1px 10px 1px rgba(115, 108, 203, .1);">
+
+    </div>
+
+
+    <!--navigation : sidebar & header-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background:#232d53; height:50px; position:relative; z-index:1; border:0px;" id="mainNav">
+    </nav>
+    <!--/navigation : sidebar & header-->
+
+
+
+    <!--creative states-->
+    <div class="creative-state-area basic-gradient container" style="background:#ffffff; top:0px; padding-bottom:35px; text-align:center;">
+        <div class="row">
+            <h2 style="color: #212529; width:100%;">Fur jeden Upload erhulst du punkte</h2>
+        </div>
+    </div>
+    <!--/creative states-->
+
+
+
+
+
+
+
+
+
+    <!--main content wrapper-->
+    <div class="content-wrapper" style="margin-left:0px; padding-top:25px;">
+
+        <div class="container">
+
+
+  
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card card-shadow mb-4">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Company</label>
+                                    <div class="col-sm-10">
+										<select class="form-control" id="option_s1" name="param" style="height:49px;">
+											<option value="AK">
+												Alaska
+											</option>
+											<option value="HI">
+												Company 1
+											</option>
+											<option value="CA">
+												Company 2
+											</option>
+											<option value="NV">
+												Company 3
+											</option>
+											<option value="OR">
+												Company 4
+											</option>
+											<option value="WA">
+												Company 5
+											</option>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Channel</label>
+                                    <div class="col-sm-10">
+										<select class="form-control" id="option_s1" name="param" style="height: 49px;">
+											<option value="AK">
+												Alaska
+											</option>
+											<option value="HI">
+												Hawaii
+											</option>
+											<option value="CA">
+												California
+											</option>
+											<option value="NV">
+												Nevada
+											</option>
+											<option value="OR">
+												Oregon
+											</option>
+											<option value="WA">
+												Washington
+											</option>
+											<option value="AZ">
+												Arizona
+											</option>
+											<option value="CO">
+												Colorado
+											</option>
+											<option value="ID">
+												Idaho
+											</option>
+											<option value="MT">
+												Montana
+											</option>
+											<option value="NE">
+												Nebraska
+											</option>
+											<option value="NM">
+												New Mexico
+											</option>
+											<option value="ND">
+												North Dakota
+											</option>
+											<option value="UT">
+												Utah
+											</option>
+											<option value="WY">
+												Wyoming
+											</option>
+											<option value="AL">
+												Alabama
+											</option>
+											<option value="AR">
+												Arkansas
+											</option>
+											<option value="IL">
+												Illinois
+											</option>
+											<option value="IA">
+												Iowa
+											</option>
+											<option value="KS">
+												Kansas
+											</option>
+											<option value="KY">
+												Kentucky
+											</option>
+											<option value="LA">
+												Louisiana
+											</option>
+											<option value="MN">
+												Minnesota
+											</option>
+											<option value="MS">
+												Mississippi
+											</option>
+											<option value="MO">
+												Missouri
+											</option>
+											<option value="OK">
+												Oklahoma
+											</option>
+											<option value="SD">
+												South Dakota
+											</option>
+											<option value="TX">
+												Texas
+											</option>
+											<option value="TN">
+												Tennessee
+											</option>
+											<option value="WI">
+												Wisconsin
+											</option>
+											<option value="CT">
+												Connecticut
+											</option>
+											<option value="DE">
+												Delaware
+											</option>
+											<option value="FL">
+												Florida
+											</option>
+											<option value="GA">
+												Georgia
+											</option>
+											<option value="IN">
+												Indiana
+											</option>
+											<option value="ME">
+												Maine
+											</option>
+											<option value="MD">
+												Maryland
+											</option>
+											<option value="MA">
+												Massachusetts
+											</option>
+											<option value="MI">
+												Michigan
+											</option>
+											<option value="NH">
+												New Hampshire
+											</option>
+											<option value="NJ">
+												New Jersey
+											</option>
+											<option value="NY">
+												New York
+											</option>
+											<option value="NC">
+												North Carolina
+											</option>
+											<option value="OH">
+												Ohio
+											</option>
+											<option value="PA">
+												Pennsylvania
+											</option>
+											<option value="RI">
+												Rhode Island
+											</option>
+											<option value="SC">
+												South Carolina
+											</option>
+											<option value="VT">
+												Vermont
+											</option>
+											<option value="VA">
+												Virginia
+											</option>
+											<option value="WV">
+												West Virginia
+											</option>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2 ">Date</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group date dpYears" data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="03-10-2018">
+                                            <input type="text" class="form-control" placeholder="03-10-2018" aria-label="Right Icon" aria-describedby="dp-ig">
+                                            <div class="input-group-append">
+                                                <button id="dp-mdo" class="btn btn-primary" type="button"><i class="fa fa-calendar f14"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								
+                            </form>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Upload</label>
+                                    <div class="col-sm-10">
+                                        <form class="dropzone mb-4" id="multiFileUpload" action="/upload.php">
+                                            <div class="dz-message needsclick">
+                                                <h5>Drop files here or click to upload.</h5>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-purple">Submit</button>
+                                    <button type="submit" id="cancel-button" class="btn btn-outline-secondary">Cancel</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+
+
+
+
+        <!--footer-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright &copy; VectorLab 2018</small>
+                </div>
+            </div>
+        </footer>
+        <!--/footer-->
+    </div>
+    <!--/main content wrapper-->
+
+
+
+
+
+
+
+
+    <!--right sidebar-->
+    <div class="right-sidebar" id="right_side_bar">
+        <div class="card border-0">
+            <div class="card-body pb-0">
+                <!--close toggle-->
+                <a href="javascript:;" class="right_side_toggle float-right close-sidebar-icon">
+                    <i class=" ti-shift-right"> </i>
+                </a>
+                <!--/close toggle-->
+            </div>
+            <div class="card-body pt-2">
+
+                <div class="right-widget">
+                    <div class="custom-title-wrap bar-primary mb-4">
+                        <div class="custom-title">Today's Activity</div>
+                    </div>
+
+                    <ul class="list-unstyled base-timeline">
+                        <li class="time-dot-primary">
+                            <div class="base-timeline-info">
+                                <a href="#">John123</a> Successfully purchased item#26
+                            </div>
+                            <small class="text-muted">
+                                28 mins ago
+                            </small>
+                        </li>
+                        <li class="time-dot-danger">
+                            <div class="base-timeline-info">
+                                <a href="#" class="text-danger">Farnandez</a> placed the order for accessories
+                            </div>
+                            <small class="text-muted">
+                                2 days ago
+                            </small>
+                        </li>
+                        <li class="time-dot-purple">
+                            <div class="base-timeline-info">
+                                User <a href="#" class="text-purple">Lisa Maria</a> checked out from the market
+                            </div>
+                            <small class="text-muted">
+                                12 mins ago
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="right-widget">
+                    <div class="custom-title-wrap bar-danger mb-4">
+                        <div class="custom-title">Active Users</div>
+                    </div>
+
+                    <ul class="list-unstyled mb-0 list-widget">
+                        <li class="cursor">
+                            <div class="media mb-4">
+                                <div class="st-alphabet mr-3">
+                                    <img class="rounded-circle" src="../static/assets/img/avatar/avatar1.jpg" alt=" ">
+                                    <span class="status bg-success"></span>
+                                </div>
+                                <div class="media-body ">
+                                    <div class="float-left">
+                                        <h6 class="text-uppercase mb-0">shirley hoe</h6>
+                                        <span class="text-muted">Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cursor">
+                            <div class="media mb-4">
+                                <div class="st-alphabet mr-3">
+                                    <img class="rounded-circle" src="../static/assets/img/avatar/avatar2.jpg" alt=" ">
+                                    <span class="status bg-warning"></span>
+                                </div>
+                                <div class="media-body ">
+                                    <div class="float-left">
+                                        <h6 class="text-uppercase mb-0">james alexender</h6>
+                                        <span class="text-muted">Screaming...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cursor">
+                            <div class="media mb-4">
+                                <div class="st-alphabet mr-3">
+                                    <img class="rounded-circle" src="../static/assets/img/avatar/avatar3.jpg" alt=" ">
+                                    <span class="status bg-info"></span>
+                                </div>
+                                <div class="media-body">
+                                    <div class="float-left">
+                                        <h6 class="text-uppercase mb-0">ursula sitorus</h6>
+                                        <span class="text-muted">Start Exploring</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cursor">
+                            <div class="media mb-3">
+                                <div class="st-alphabet mr-3">
+                                    <img class="rounded-circle" src="../static/assets/img/avatar/avatar4.jpg" alt=" ">
+                                    <span class="status bg-danger"></span>
+                                </div>
+                                <div class="media-body">
+                                    <div class="float-left">
+                                        <h6 class="text-uppercase mb-0">jonna pinedda</h6>
+                                        <span class="text-muted">Busy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="right-widget">
+
+                    <div class="custom-title-wrap bar-success mb-4">
+                        <div class="custom-title">Notification</div>
+                    </div>
+
+                    <div >
+                        <div class="dropdown-divider mb-0"></div>
+                        <a class="nav-link border-bottom px-0 py-3" href="#">
+                            <span class="text-primary">
+                            <span class="weight700 f12">
+                                <i class="vl_bell weight600 pr-2"></i>Weekly Update</span>
+                            </span>
+                            <span class="small float-right text-muted">03:14 AM</span>
+
+                            <div class="text-dark f12">
+                                This week project update report generated. All team members are requested to check the updates
+                            </div>
+                        </a>
+
+                        <a class="nav-link border-bottom px-0 py-3" href="#">
+                            <span class="text-danger">
+                            <span class="weight700 f12">
+                                <i class="vl_Download-circle weight600 pr-2"></i>Server Error</span>
+                            </span>
+                            <span class="small float-right text-muted">10:34 AM</span>
+
+                            <div class="text-dark f12">
+                                Unexpectedly server response stop. Responsible members are requested to fix it soon
+                            </div>
+                        </a>
+
+                        <a class="nav-link border-bottom px-0 py-3" href="#">
+                            <span class="text-success">
+                            <span class="weight700 f12">
+                                <i class="vl_screen weight600 pr-2"></i>Monthly Meeting</span>
+                            </span>
+                            <span class="small float-right text-muted">12:30 AM</span>
+
+                            <div class="text-dark f12">
+                                Our monthly meeting will be held on tomorrow sharp 12:30. All members are requested to attend this meeting.
+                            </div>
+                        </a>
+
+                        <div class="text-center mt-3">
+                            <a class="nav-link px-0" href="#">View all notification</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--/right sidebar-->
+
+    <!--basic scripts-->
+    <script src="../static/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../static/assets/vendor/popper.min.js"></script>
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/assets/vendor/jquery-dropdown-master/jquery.dropdown.js"></script>
+    <script src="../static/assets/vendor/m-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../static/assets/vendor/icheck/skins/icheck.min.js"></script>
+
+
+    <!--dropzone-->
+    <script src="../static/assets/vendor/dropzone/dropzone.js"></script>
+    <!--init dropzone-->
+    <script src="../static/assets/vendor/js-init/init-dropzone.js"></script>
+	
+	<!--date picker-->
+    <script src="../static/assets/vendor/date-picker/js/bootstrap-datepicker.min.js"></script>
+    <!--init date picker-->
+    <script src="../static/assets/vendor/js-init/pickers/init-date-picker.js"></script>
+	
+	<!--datetime picker-->
+    <script src="../static/assets/vendor/datetime-picker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../static/assets/vendor/timepicker/js/bootstrap-timepicker.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="../static/assets/vendor/modernizr.js"></script>
+    <![endif]-->
+
+    <!--basic scripts initialization-->
+    <script src="../static/assets/js/scripts.js"></script>
+    <script>
+        $(document).ready(function(){
+            //$("#cancel-button").click(function(){
+                //$("#image").val("")
+            //})
+        });
+    </script>
+</body>
+</html>
+
