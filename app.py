@@ -26,6 +26,14 @@ def werbetreibende():
 
 
 
+# Werbung teilen" -> Submenu (Werbung teilen) route
+@app.route('/werbung-teilen/')
+def werbung_teilen():
+    return render_template('umfrage.html')
+
+
+
+
 # Werbung teilen" -> Submenu (Weiterleitung) route
 @app.route('/weiterleitung/')
 def weiterleitung():
@@ -65,15 +73,6 @@ def einstellungen():
 @app.route('/mein-profil/')
 def mein_profil():
     return render_template('mein-profil.html')
-
-
-
-
-
-# Umfrage route
-@app.route('/umfrage/')
-def umfrage():
-    return render_template('umfrage.html')
 
 
 
